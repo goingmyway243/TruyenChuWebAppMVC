@@ -1,0 +1,36 @@
+﻿@model TruyenChuWebAppMVC.Models.Novels
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2 class="text-primary p-2">Truyện đề cử ></h2>
+
+<div class="row p-2" id="novel_container">
+    @foreach (var item in Model.novels)
+    {
+        <div class="card m-2 p-1" style="width:200px">
+            <img src="http://localhost/api/truyenchu/images/@(item.cover).jpg" class="card-img-top" alt="" style="height:250px">
+
+            <div class="card-body">
+                <a class="h5 card-title" style="color: black"
+                   data-toggle="tooltip" data-placement="top" title="@item.description" href="#">
+                    @item.title
+                </a>
+                <div class="mt-2">
+                    @if (item.chapters != null)
+                    {
+                        for (int i = item.chapters.Count - 1; i >= 0; i--)
+                        {
+                            var chapter = item.chapters[i];
+                            <div>
+                                <a class="card-text text-black-50" href="#">Chương @(i+1)</a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
