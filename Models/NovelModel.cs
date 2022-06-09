@@ -16,6 +16,6 @@ namespace TruyenChuWebAppMVC.Models
         public int view { get; set; }
         public string id_user { get; set; }
 
-        public IList<ChapterModel> chapters { get; set; }
+        public List<ChapterModel> chapters { get; set; }
     }
 }

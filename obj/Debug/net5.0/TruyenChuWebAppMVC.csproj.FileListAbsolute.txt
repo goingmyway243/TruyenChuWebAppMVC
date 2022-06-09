@@ -358,3 +358,4 @@ D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\TruyenChuWeb
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Home\SignIn.cshtml.g.cs
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Home\SignUp.cshtml.g.cs
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\bin\Debug\net5.0\Newtonsoft.Json.dll
+D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Novel\Index.cshtml.g.cs

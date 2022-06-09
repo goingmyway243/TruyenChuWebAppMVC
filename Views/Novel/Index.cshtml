@@ -1,0 +1,11 @@
+﻿@model TruyenChuWebAppMVC.Models.NovelModel
+
+@{
+    DateTime updateTime = DateTime.Parse(Model.chapters.Last().date_post);
+}
+
+<h2 class="text-dark text-center">@Model.title</h2>
+<div class="text-center text-black-50">
+    [Cập nhật lúc @updateTime.Hour.ToString("00"):@updateTime.Minute.ToString("00")
+    @updateTime.ToShortDateString()]
+</div>

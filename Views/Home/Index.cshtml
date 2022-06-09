@@ -1,4 +1,4 @@
-﻿@model TruyenChuWebAppMVC.Models.Novels
+﻿@model TruyenChuWebAppMVC.Models.NovelRepository
 
 @{
     ViewData["Title"] = "Home Page";
@@ -10,11 +10,13 @@
     @foreach (var item in Model.novels)
     {
         <div class="card m-2 p-1" style="width:200px">
-            <img src="http://localhost/api/truyenchu/images/@(item.cover).jpg" class="card-img-top" alt="" style="height:250px">
+            <img src="http://localhost/api/truyenchu/images/@(item.cover).jpg"
+                 class="card-img-top" alt="" style="height:250px">
 
-            <div class="card-body">
+            <div class="card-body p-2 pt-3">
                 <a class="h5 card-title" style="color: black"
-                   data-toggle="tooltip" data-placement="top" title="@item.description" href="#">
+                   data-toggle="tooltip" data-placement="top" title="@item.description"
+                   asp-controller="Novel" asp-action="Index" asp-route-novelId="@item.id">
                     @item.title
                 </a>
                 <div class="mt-2">
@@ -23,8 +25,33 @@
                         for (int i = item.chapters.Count - 1; i >= 0; i--)
                         {
                             var chapter = item.chapters[i];
+                            TimeSpan time = DateTime.Now - DateTime.Parse(item.chapters[i].date_post);
                             <div>
-                                <a class="card-text text-black-50" href="#">Chương @(i+1)</a>
+                                <a class="card-text text-dark" href="#">Chương @(i+1)</a>
+                                @if (time.TotalDays >= 1)
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        @((int)time.TotalDays) ngày trước
+                                    </span>
+                                }
+                                else if (time.TotalHours >= 1)
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        @((int)time.TotalHours) giờ trước
+                                    </span>
+                                }
+                                else if (time.TotalMinutes >= 1)
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        @time.TotalMinutes phút trước
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        vừa xong
+                                    </span>
+                                }
                             </div>
                         }
                     }
