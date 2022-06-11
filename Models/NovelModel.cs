@@ -17,5 +17,8 @@ namespace TruyenChuWebAppMVC.Models
         public string id_user { get; set; }
 
         public List<ChapterModel> chapters { get; set; }
+        public List<GenreModel> genres { get; set; }
+        public AuthorModel author{ get; set; }
+        public UserModel user { get; set; }
     }
 }

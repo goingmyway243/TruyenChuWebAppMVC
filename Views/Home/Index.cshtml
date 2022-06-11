@@ -27,7 +27,10 @@
                             var chapter = item.chapters[i];
                             TimeSpan time = DateTime.Now - DateTime.Parse(item.chapters[i].date_post);
                             <div>
-                                <a class="card-text text-dark" href="#">Chương @(i+1)</a>
+                                <a asp-action="Index" asp-controller="Chapter" asp-route-chapterId="@chapter.id"
+                                   class="card-text text-dark">
+                                    Chương @(i+1)
+                                </a>
                                 @if (time.TotalDays >= 1)
                                 {
                                     <span class="text-black-50 mt-1" style="font-size: 12px; float:right">

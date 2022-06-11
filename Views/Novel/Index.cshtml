@@ -2,10 +2,93 @@
 
 @{
     DateTime updateTime = DateTime.Parse(Model.chapters.Last().date_post);
+    DateTime postTime = DateTime.Parse(Model.date_post);
 }
 
 <h2 class="text-dark text-center">@Model.title</h2>
 <div class="text-center text-black-50">
     [Cập nhật lúc @updateTime.Hour.ToString("00"):@updateTime.Minute.ToString("00")
-    @updateTime.ToShortDateString()]
+    @updateTime.ToString("dd/MM/yyyy")]
+</div>
+
+<div class="mt-5 p-2 mx-auto" style="width:70%">
+    <img src="http://localhost/api/truyenchu/images/@(Model.cover).jpg" alt="..."
+         class="col-xl-5 p-0" style="width:200px; height:280px" />
+    <ul class="d-inline-block border-dark rounded col-7 offset-1 align-top list-group">
+        <li class="list-unstyled pt-5 mb-2 row">
+            <span class="text-secondary col-4">Tác giả</span>
+            <span class="text-dark">@Model.author.author_name</span>
+        </li>
+        <li class="list-unstyled my-2 row">
+            <span class="text-secondary col-4">Thể loại</span>
+            <div class="d-flex">
+                @foreach (GenreModel genre in Model.genres)
+                {
+                    <a class="text-primary d-inline-flex">@genre.genre_name</a>
+                    if (genre != Model.genres.Last())
+                    {
+                        <span class="text-secondary mx-1">-</span>
+                    }
+                }
+            </div>
+
+        </li>
+        <li class="list-unstyled my-2 row">
+            <span class="text-secondary col-4">Ngày đăng</span>
+            <span class="text-dark">@postTime.ToString("dd/MM/yyyy")</span>
+        </li>
+        <li class="list-unstyled my-2 row">
+            <span class="text-secondary col-4">Người đăng</span>
+            <span class="text-dark">@Model.user.name</span>
+        </li>
+    </ul>
+</div>
+
+<div class="mt-3 mx-auto" style="width:70%">
+    <p class="h3 text-secondary">Nội dung</p>
+    <div class="border border-secondary rounded my-1 p-2">
+        <p class="text-dark">@Model.description</p>
+    </div>
+</div>
+
+<div class="mt-5 mx-auto" style="width:70%">
+    <p class="h3 text-primary">Danh sách chương</p>
+    <div class="border border-primary rounded my-1 p-2 px-4">
+        @{ int lastIndex = Model.chapters.Count - 1;}
+        @for (int i = lastIndex; i >= 0; i--)
+        {
+            <div class="my-1">
+                @{
+                    ChapterModel chapter = Model.chapters[i];
+                    DateTime chapterPostTime = DateTime.Parse(chapter.date_post);
+                    string postTimeStr = "";
+                    if (chapterPostTime.Month > 1)
+                    {
+                        postTimeStr = chapterPostTime.ToString("dd/MM/yyyy");
+                    }
+                    else if (chapterPostTime.Day > 1)
+                    {
+                        postTimeStr = chapterPostTime.Day + " ngày trước";
+                    }
+                    else if (chapterPostTime.Hour > 1)
+                    {
+                        postTimeStr = chapterPostTime.Day + " giờ trước";
+                    }
+                    else if (chapterPostTime.Minute > 1)
+                    {
+                        postTimeStr = chapterPostTime.Day + " phút trước";
+                    }
+                    else
+                    {
+                        postTimeStr = "Vừa xong";
+                    }
+                }
+
+                <a class="text-dark" asp-action="Index" asp-controller="Chapter" asp-route-chapterId="@chapter.id">
+                    Chương @(i+1): @chapter.title
+                </a>
+                <span class="text-black-50 float-right">@postTimeStr</span>
+            </div>
+        }
+    </div>
 </div>

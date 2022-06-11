@@ -14,9 +14,9 @@ namespace TruyenChuWebAppMVC.Models
             return chapters.FirstOrDefault(chapter => chapter.id == id);
         }
 
-        public IEnumerable<ChapterModel> GetListChapterByNovelId(int id)
+        public IEnumerable<ChapterModel> GetListChapterByNovelId(int novelId)
         {
-            return chapters.Where(chapter => chapter.id_novel == id);
+            return chapters.Where(chapter => chapter.id_novel == novelId);
         }
     }
 }

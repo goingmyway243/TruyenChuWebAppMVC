@@ -11,12 +11,12 @@ namespace TruyenChuWebAppMVC.Controllers
     public class NovelController : Controller
     {
         private NovelModel _novelModel;
-        
+
         [Route("novel/{novelId}")]
         public IActionResult Index(int novelId)
         {
-            _novelModel = CallAPI.GetNovelById(novelId);
-            CallAPI.AttachChaptersByNovelId(ref _novelModel);
+            _novelModel = CallAPI.GetNovelById(novelId, true);
+
             return View(_novelModel);
         }
 
