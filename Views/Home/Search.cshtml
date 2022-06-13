@@ -1,37 +1,6 @@
 ﻿@model TruyenChuWebAppMVC.Models.NovelRepository
 
-@{
-    ViewData["Title"] = "Home Page";
-
-    var mostViewNovels = Model.GetMostViewNovel();
-}
-
-<h2 class="text-primary p-2">Truyện đề cử ></h2>
-
-<div class="row p-2" id="novel_container">
-    @foreach (var item in mostViewNovels)
-    {
-        <a class="card m-2 p-1" style="width:200px"
-           data-toggle="tooltip" data-placement="top" title="@item.description"
-           asp-controller="Novel" asp-action="Index" asp-route-novelId="@item.id">
-            <img src="http://localhost/api/truyenchu/images/@(item.cover).jpg"
-                 class="card-img-top" alt="" style="height:250px">
-            <div class="position-absolute fixed-bottom p-1">
-                <div class="px-2 py-1 text-truncate text-center bg-dark" style="opacity:0.8">
-                    <p class="h6 text-white">
-                        @item.title
-                    </p>
-                    <p class="text-white m-0">
-                        Lượt xem: @item.view
-                    </p>
-                </div>
-            </div>
-            
-        </a>
-    }
-</div>
-
-<h2 class="text-primary p-2 mt-5">Truyện mới cập nhật ></h2>
+<h2>Tìm truyện</h2>
 
 <div class="row p-2" id="novel_container">
     @foreach (var item in Model.novels)
@@ -55,8 +24,8 @@
                             var chapter = item.chapters[i];
                             TimeSpan time = DateTime.Now - DateTime.Parse(item.chapters[i].date_post);
                             <div>
-                                <a asp-action="Index" asp-controller="Chapter" 
-                                   asp-route-chapterId="@chapter.id" asp-route-viewId="@index";
+                                <a asp-action="Index" asp-controller="Chapter"
+                                   asp-route-chapterId="@chapter.id" asp-route-viewId="@index" ;
                                    class="card-text text-dark">
                                     Chương @(i+1)
                                 </a>
@@ -92,4 +61,3 @@
         </div>
     }
 </div>
-

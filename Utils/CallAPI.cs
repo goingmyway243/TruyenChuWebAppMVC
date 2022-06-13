@@ -21,7 +21,7 @@ namespace TruyenChuWebAppMVC.Utils
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static void AttachChaptersByNovelId(ref NovelRepository novelRepo)
+        public static void AttachChaptersByNovel(ref NovelRepository novelRepo)
         {
             var chapterRepository = GetChapterRepository();
 
@@ -31,28 +31,34 @@ namespace TruyenChuWebAppMVC.Utils
             }
         }
 
-        public static void AttachChaptersByNovelId(ref NovelModel novel)
+        public static void AttachChaptersByNovel(ref NovelModel novel)
         {
             var chapterRepository = GetChapterRepository();
             novel.chapters = chapterRepository.GetListChapterByNovelId(novel.id).ToList();
         }
 
-        public static void AttachAuthorByNovelId(ref NovelModel novel)
+        public static void AttachAuthorByNovel(ref NovelModel novel)
         {
             var authorRepository = GetAuthorRepository();
             novel.author = authorRepository.GetAuthorById(novel.id_author);
         }
 
-        public static void AttachGenresByNovelId(ref NovelModel novel)
+        public static void AttachGenresByNovel(ref NovelModel novel)
         {
             var listGenre = GetListGenreByNovelId(novel.id);
             novel.genres = listGenre.genres.ToList();
         }
 
-        public static void AttachUserByNovelId(ref NovelModel novel)
+        public static void AttachUserByNovel(ref NovelModel novel)
         {
             var userRepository = GetUserRepository();
             novel.user = userRepository.GetUserById(novel.id_user);
+        }
+
+        public static void AttachNovelByChapter(ref ChapterModel chapter)
+        {
+            var novelRepository = GetNovelRepository();
+            chapter.novel = novelRepository.GetNovelById(chapter.id_novel);
         }
 
         public static UserRepository GetUserRepository()
@@ -99,13 +105,28 @@ namespace TruyenChuWebAppMVC.Utils
             
             if(attachFullInfo)
             {
-                AttachChaptersByNovelId(ref novel);
-                AttachAuthorByNovelId(ref novel);
-                AttachGenresByNovelId(ref novel);
-                AttachUserByNovelId(ref novel);
+                AttachChaptersByNovel(ref novel);
+                AttachAuthorByNovel(ref novel);
+                AttachGenresByNovel(ref novel);
+                AttachUserByNovel(ref novel);
             }
 
             return novel;
+        }
+
+        public static ChapterModel GetChapterById(int id, bool attachFullInfo = false)
+        {
+            var task = GetChapterByIdTask(id);
+            task.Wait();
+
+            ChapterModel chapter = task.Result;
+
+            if (attachFullInfo)
+            {
+                AttachNovelByChapter(ref chapter);
+            }
+
+            return chapter;
         }
 
         public static GenreRepository GetListGenreByNovelId(int novelId)
@@ -216,6 +237,34 @@ namespace TruyenChuWebAppMVC.Utils
             var novel = JsonConvert.DeserializeObject<NovelModel>(result);
 
             return novel;
+        }
+
+        private static async Task<ChapterModel> GetChapterByIdTask(int id)
+        {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
+            var parameter = new Dictionary<string, string>()
+            {
+                {"ID", id +"" }
+            };
+
+            var postParams = new FormUrlEncodedContent(parameter);
+
+            _response = await _client.PostAsync("get_chapter_by_id.php", postParams);
+
+            string result = await _response.Content.ReadAsStringAsync();
+
+            if (result.Contains("Error"))
+            {
+                return null;
+            }
+
+            var chapter = JsonConvert.DeserializeObject<ChapterModel>(result);
+
+            return chapter;
         }
 
         private static async Task<GenreRepository> GetListGenreByNovelIdTask(int novelId)

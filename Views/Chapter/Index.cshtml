@@ -1,3 +1,60 @@
 ﻿@model TruyenChuWebAppMVC.Models.ChapterModel
 
-<h2>Hello</h2>
+@{
+    string[] contentLines = Model.content.Split('\n');
+
+    int currentIndex = Model.view_id - 1;
+
+    int nextId = currentIndex + 1 < Model.novel.chapters.Count ? Model.novel.chapters[currentIndex + 1].id : -1;
+
+    int previousId = currentIndex - 1 >= 0 ? Model.novel.chapters[currentIndex - 1].id : -1;
+
+}
+
+<div>
+    <h3 class="text-primary d-inline-flex">@Model.novel.title</h3>
+    <h3 class="text-secondary d-inline-flex ml-1">- Chương @Model.view_id</h3>
+</div>
+
+<div class="text-center sticky-top bg-light py-2" style="vertical-align:central">
+    <a class="btn btn-success d-inline border border-success rounded pt-1 pb-2 @(previousId == -1 ? "disabled bg-secondary" : "")"
+       asp-action="Index" asp-controller="Chapter"
+       asp-route-chapterId="@previousId" asp-route-viewId="@(Model.view_id - 1)">
+        <img src="~/img/arrow.png" style="width:35px; height:30px" />
+    </a>
+    <div class="dropdown d-inline ml-2 mr-1">
+        <button class="btn btn-outline-success dropdown-toggle"
+                type="button" id="dropdownMenu"
+                data-toggle="dropdown" aria-expanded="false">
+            Chương @Model.view_id
+        </button>
+
+        <ul class="border border-dark rounded dropdown-menu" aria-labelledby="dropdownMenu">
+            @{ int lastIndex = Model.novel.chapters.Count - 1;}
+            @for (int i = lastIndex; i >= 0; i--)
+            {
+                int index = i + 1;
+                var chapter = Model.novel.chapters[i];
+                <li>
+                    <a class="dropdown-item @(Model.id == chapter.id ? "active" : "")"
+                       asp-action="Index" asp-controller="Chapter"
+                       asp-route-chapterId="@chapter.id" asp-route-viewId="@index">Chương @index</a>
+                </li>
+                }
+            </ul>
+        </div>
+
+        <a class="btn btn-success d-inline border border-success rounded pt-1 pb-2 @(nextId == -1 ? " disabled bg-secondary" : "" )"
+           asp-action="Index" asp-controller="Chapter"
+           asp-route-chapterId="@nextId" asp-route-viewId="@(Model.view_id + 1)">
+            <img src="~/img/arrow.png" style="width:35px; height:30px; transform: scaleX(-1)" />
+        </a>
+    </div>
+
+    <div class="m-5">
+        @foreach (string content in contentLines)
+        {
+            <p class="text-dark my-4" style="font-size:20px; font-family:'Times New Roman'">@content</p>
+        }
+        <p class="text-center text-dark font-weight-bold my-5" style="font-size: 20px; font-family: 'Times New Roman'">-OoO-</p>
+    </div>

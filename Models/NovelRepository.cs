@@ -13,5 +13,11 @@ namespace TruyenChuWebAppMVC.Models
         {
             return novels.FirstOrDefault(novel => novel.id == id);
         }
+
+        public List<NovelModel> GetMostViewNovel()
+        {
+            var list = novels.OrderByDescending(novel => novel.view).ToList();
+            return list.Take(5).ToList();
+        }
     }
 }

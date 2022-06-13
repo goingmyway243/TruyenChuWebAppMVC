@@ -12,5 +12,8 @@ namespace TruyenChuWebAppMVC.Models
         public string content { get; set; }
         public string date_post { get; set; }
         public int id_novel { get; set; }
+
+        public int view_id { get; set; }
+        public NovelModel novel { get; set; }
     }
 }

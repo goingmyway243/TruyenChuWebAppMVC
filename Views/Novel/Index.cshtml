@@ -57,6 +57,7 @@
         @{ int lastIndex = Model.chapters.Count - 1;}
         @for (int i = lastIndex; i >= 0; i--)
         {
+            int index = i + 1;
             <div class="my-1">
                 @{
                     ChapterModel chapter = Model.chapters[i];
@@ -84,8 +85,9 @@
                     }
                 }
 
-                <a class="text-dark" asp-action="Index" asp-controller="Chapter" asp-route-chapterId="@chapter.id">
-                    Chương @(i+1): @chapter.title
+                <a class="text-dark" asp-action="Index" asp-controller="Chapter" 
+                   asp-route-chapterId="@chapter.id" asp-route-viewId="@index">
+                    Chương @index: @chapter.title
                 </a>
                 <span class="text-black-50 float-right">@postTimeStr</span>
             </div>

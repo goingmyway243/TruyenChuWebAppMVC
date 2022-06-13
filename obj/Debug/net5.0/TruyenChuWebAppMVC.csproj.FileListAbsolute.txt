@@ -360,3 +360,4 @@ D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\bin\Debug\net5.0\Newtonsoft.Json.dll
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Novel\Index.cshtml.g.cs
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Chapter\Index.cshtml.g.cs
+D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Home\Search.cshtml.g.cs

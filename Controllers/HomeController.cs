@@ -25,7 +25,7 @@ namespace TruyenChuWebAppMVC.Controllers
         public IActionResult Index()
         {
             _novelRepository = CallAPI.GetNovelRepository();
-            CallAPI.AttachChaptersByNovelId(ref _novelRepository);
+            CallAPI.AttachChaptersByNovel(ref _novelRepository);
 
             return View(_novelRepository);
         }
@@ -43,6 +43,15 @@ namespace TruyenChuWebAppMVC.Controllers
         public IActionResult SignUp()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(string keyword)
+        {
+            _novelRepository = CallAPI.GetNovelRepository();
+            _novelRepository.novels = _novelRepository.novels.Where(novel => novel.title.ToLower().Contains(keyword.ToLower()));
+            CallAPI.AttachChaptersByNovel(ref _novelRepository);
+            return View(_novelRepository);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
