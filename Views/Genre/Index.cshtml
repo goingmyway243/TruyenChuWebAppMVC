@@ -1,0 +1,14 @@
+﻿@model TruyenChuWebAppMVC.Models.GenreRepository
+
+<h2 class="p-2">Thể loại</h2>
+
+<ul class="list-group w-25 m-3">
+    @foreach (GenreModel genre in Model.genres)
+    {
+        <li class="list-group-item p-2 m-0 m-2">
+            <a asp-action="Genre" asp-controller="Genre"
+               asp-route-genreId="@genre.id" 
+               class="btn btn-primary form-control">@genre.genre_name</a>
+        </li>
+    }
+</ul>

@@ -61,6 +61,12 @@ namespace TruyenChuWebAppMVC.Utils
             chapter.novel = novelRepository.GetNovelById(chapter.id_novel);
         }
 
+        public static void AttachNovelsByGenre(ref GenreModel genre)
+        {
+            var listNovel = GetListNovelByGenreId(genre.id);
+            genre.novels = listNovel.novels.ToList();
+        }
+
         public static UserRepository GetUserRepository()
         {
             var task = GetUserRepositoryTask();
@@ -129,9 +135,31 @@ namespace TruyenChuWebAppMVC.Utils
             return chapter;
         }
 
+        public static GenreModel GetGenreById(int id, bool attachFullInfo = false)
+        {
+            var task = GetGenreByIdTask(id);
+            task.Wait();
+
+            GenreModel genreModel = task.Result;
+
+            if (attachFullInfo)
+            {
+                AttachNovelsByGenre(ref genreModel);
+            }
+
+            return genreModel;
+        }
+
         public static GenreRepository GetListGenreByNovelId(int novelId)
         {
             var task = GetListGenreByNovelIdTask(novelId);
+            task.Wait();
+            return task.Result;
+        }
+
+        public static NovelRepository GetListNovelByGenreId(int genreId)
+        {
+            var task = GetListNovelByGenreIdTask(genreId);
             task.Wait();
             return task.Result;
         }
@@ -267,6 +295,34 @@ namespace TruyenChuWebAppMVC.Utils
             return chapter;
         }
 
+        private static async Task<GenreModel> GetGenreByIdTask(int id)
+        {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
+            var parameter = new Dictionary<string, string>()
+            {
+                {"ID", id +"" }
+            };
+
+            var postParams = new FormUrlEncodedContent(parameter);
+
+            _response = await _client.PostAsync("get_genre_by_id.php", postParams);
+
+            string result = await _response.Content.ReadAsStringAsync();
+
+            if (result.Contains("Error"))
+            {
+                return null;
+            }
+
+            var genre = JsonConvert.DeserializeObject<GenreModel>(result);
+
+            return genre;
+        }
+
         private static async Task<GenreRepository> GetListGenreByNovelIdTask(int novelId)
         {
             if (_client == null)
@@ -291,6 +347,34 @@ namespace TruyenChuWebAppMVC.Utils
             }
 
             var list = JsonConvert.DeserializeObject<GenreRepository>(result);
+
+            return list;
+        }
+
+        private static async Task<NovelRepository> GetListNovelByGenreIdTask(int genreId)
+        {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
+            var parameter = new Dictionary<string, string>()
+            {
+                {"IDGenre", genreId +"" }
+            };
+
+            var postParams = new FormUrlEncodedContent(parameter);
+
+            _response = await _client.PostAsync("get_novel_by_idgenre.php", postParams);
+
+            string result = await _response.Content.ReadAsStringAsync();
+
+            if (result.Contains("Error"))
+            {
+                return null;
+            }
+
+            var list = JsonConvert.DeserializeObject<NovelRepository>(result);
 
             return list;
         }

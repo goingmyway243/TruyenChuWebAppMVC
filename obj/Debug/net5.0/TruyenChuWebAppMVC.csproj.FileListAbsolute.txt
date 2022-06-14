@@ -361,3 +361,5 @@ D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\bin\Debug\net5.0\Newtonsoft.J
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Novel\Index.cshtml.g.cs
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Chapter\Index.cshtml.g.cs
 D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Home\Search.cshtml.g.cs
+D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Genre\Index.cshtml.g.cs
+D:\Code PJ\VisualStudioProjects\TruyenChuWebAppMVC\obj\Debug\net5.0\Razor\Views\Genre\Genre.cshtml.g.cs

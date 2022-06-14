@@ -16,7 +16,7 @@
            asp-controller="Novel" asp-action="Index" asp-route-novelId="@item.id">
             <img src="http://localhost/api/truyenchu/images/@(item.cover).jpg"
                  class="card-img-top" alt="" style="height:250px">
-            <div class="position-absolute fixed-bottom p-1">
+            <div class="position-absolute fixed-bottom p-1" style="z-index:0">
                 <div class="px-2 py-1 text-truncate text-center bg-dark" style="opacity:0.8">
                     <p class="h6 text-white">
                         @item.title

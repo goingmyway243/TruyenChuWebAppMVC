@@ -12,7 +12,7 @@ namespace TruyenChuWebAppMVC.Controllers
     {
         private ChapterModel _chapterModel { get; set; }
 
-        [Route("chapter/{chapterId}")]
+        [Route("Chapter/{chapterId}")]
         public IActionResult Index(int chapterId, int viewId)
         {
             _chapterModel = CallAPI.GetChapterById(chapterId, true);

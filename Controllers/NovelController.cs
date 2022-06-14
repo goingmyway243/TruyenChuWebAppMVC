@@ -12,7 +12,7 @@ namespace TruyenChuWebAppMVC.Controllers
     {
         private NovelModel _novelModel;
 
-        [Route("novel/{novelId}")]
+        [Route("Novel/{novelId}")]
         public IActionResult Index(int novelId)
         {
             _novelModel = CallAPI.GetNovelById(novelId, true);
