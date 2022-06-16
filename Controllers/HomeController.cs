@@ -35,9 +35,29 @@ namespace TruyenChuWebAppMVC.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult SignIn()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignIn(UserModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
+            var loginUser = CallAPI.Login(user);
+
+            if(loginUser == null)
+            {
+                ModelState.AddModelError(nameof(user.loginState), "Tài khoản hoặc mật khẩu không đúng!");
+                return View(user);
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult SignUp()
@@ -59,6 +79,6 @@ namespace TruyenChuWebAppMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
     }
 }

@@ -23,6 +23,13 @@ namespace TruyenChuWebAppMVC.Controllers
         {
             _genreModel = CallAPI.GetGenreById(genreId, true);
 
+            var novelRepository = new NovelRepository();
+            novelRepository.novels = _genreModel.novels;
+            CallAPI.AttachChaptersByNovel(ref novelRepository);
+
+            _genreModel.novels = novelRepository.novels.ToList();
+            _genreModel.novels.OrderByDescending(novel => novel.date_post).ToList();
+
             return View(_genreModel);
         }
     }

@@ -108,8 +108,8 @@ namespace TruyenChuWebAppMVC.Utils
             task.Wait();
 
             NovelModel novel = task.Result;
-            
-            if(attachFullInfo)
+
+            if (attachFullInfo)
             {
                 AttachChaptersByNovel(ref novel);
                 AttachAuthorByNovel(ref novel);
@@ -164,6 +164,13 @@ namespace TruyenChuWebAppMVC.Utils
             return task.Result;
         }
 
+        public static UserModel Login(UserModel user)
+        {
+            var task = LoginTask(user);
+            task.Wait();
+            return task.Result;
+        }
+
         private static async Task<UserRepository> GetUserRepositoryTask()
         {
             if (_client == null)
@@ -211,7 +218,7 @@ namespace TruyenChuWebAppMVC.Utils
 
         private static async Task<NovelRepository> GetNovelRepositoryTask()
         {
-            if(_client == null)
+            if (_client == null)
             {
                 Initialize();
             }
@@ -256,8 +263,8 @@ namespace TruyenChuWebAppMVC.Utils
             _response = await _client.PostAsync("get_novel_by_id.php", postParams);
 
             string result = await _response.Content.ReadAsStringAsync();
-            
-            if(result.Contains("Error"))
+
+            if (result.Contains("Error"))
             {
                 return null;
             }
@@ -377,6 +384,35 @@ namespace TruyenChuWebAppMVC.Utils
             var list = JsonConvert.DeserializeObject<NovelRepository>(result);
 
             return list;
+        }
+
+        private static async Task<UserModel> LoginTask(UserModel user)
+        {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
+            var parameter = new Dictionary<string, string>()
+            {
+                {"ID", user.id},
+                {"Pass", user.pass },
+            };
+
+            var postParams = new FormUrlEncodedContent(parameter);
+
+            _response = await _client.PostAsync("login.php", postParams);
+
+            string result = await _response.Content.ReadAsStringAsync();
+
+            if (result.Contains("Error"))
+            {
+                return null;
+            }
+
+            var loginUser = JsonConvert.DeserializeObject<UserModel>(result);
+
+            return loginUser;
         }
     }
 }

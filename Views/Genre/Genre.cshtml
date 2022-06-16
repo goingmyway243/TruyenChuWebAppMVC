@@ -2,4 +2,62 @@
 
 <h2>Thể loại: @Model.genre_name</h2>
 
-<h3>Số lượng: @Model.novels.Count()</h3>
+<div class="row p-2" id="novel_container">
+    @foreach (var item in Model.novels)
+    {
+        <div class="card m-2 p-1" style="width:200px">
+            <img src="http://localhost/api/truyenchu/images/@(item.cover).jpg"
+                 class="card-img-top" alt="" style="height:250px">
+
+            <div class="card-body p-2 pt-3">
+                <a class="h5 card-title" style="color: black"
+                   data-toggle="tooltip" data-placement="top" title="@item.description"
+                   asp-controller="Novel" asp-action="Index" asp-route-novelId="@item.id">
+                    @item.title
+                </a>
+                <div class="mt-2">
+                    @if (item.chapters != null)
+                    {
+                        for (int i = item.chapters.Count - 1; i >= 0; i--)
+                        {
+                            int index = i + 1;
+                            var chapter = item.chapters[i];
+                            TimeSpan time = DateTime.Now - DateTime.Parse(item.chapters[i].date_post);
+                            <div>
+                                <a asp-action="Index" asp-controller="Chapter"
+                                   asp-route-chapterId="@chapter.id" asp-route-viewId="@index" ;
+                                   class="card-text text-dark">
+                                    Chương @(i+1)
+                                </a>
+                                @if (time.TotalDays >= 1)
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        @((int)time.TotalDays) ngày trước
+                                    </span>
+                                }
+                                else if (time.TotalHours >= 1)
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        @((int)time.TotalHours) giờ trước
+                                    </span>
+                                }
+                                else if (time.TotalMinutes >= 1)
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        @time.TotalMinutes phút trước
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-black-50 mt-1" style="font-size: 12px; float:right">
+                                        vừa xong
+                                    </span>
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿@model TruyenChuWebAppMVC.Models.NovelModel
 
 @{
-    DateTime updateTime = DateTime.Parse(Model.chapters.Last().date_post);
+    DateTime updateTime = DateTime.Parse(Model.chapters.Count() > 0 ? Model.chapters.Last().date_post : Model.date_post);
     DateTime postTime = DateTime.Parse(Model.date_post);
 }
 
