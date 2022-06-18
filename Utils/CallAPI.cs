@@ -67,6 +67,13 @@ namespace TruyenChuWebAppMVC.Utils
             genre.novels = listNovel.novels.ToList();
         }
 
+        public static bool APIUser(UserModel user, string type)
+        {
+            var task = APIUserTask(user, type);
+            task.Wait();
+            return task.Result;
+        }
+
         public static UserRepository GetUserRepository()
         {
             var task = GetUserRepositoryTask();
@@ -413,6 +420,37 @@ namespace TruyenChuWebAppMVC.Utils
             var loginUser = JsonConvert.DeserializeObject<UserModel>(result);
 
             return loginUser;
+        }
+
+        public static async Task<bool> APIUserTask(UserModel user, string type)
+        {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
+            var parameter = new Dictionary<string, string>()
+            {
+                {"Type", type},
+                {"ID", user.id},
+                {"Name", user.name },
+                {"Pass", user.pass },
+                {"Email", user.email },
+                {"IDRole", user.id_role + "" },
+            };
+
+            var postParams = new FormUrlEncodedContent(parameter);
+
+            _response = await _client.PostAsync("api_user.php", postParams);
+
+            string result = await _response.Content.ReadAsStringAsync();
+
+            if (result.Contains("Error"))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

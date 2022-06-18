@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TruyenChuWebAppMVC.Controllers;
 
 namespace TruyenChuWebAppMVC.Models
 {
@@ -20,5 +21,10 @@ namespace TruyenChuWebAppMVC.Models
         public List<GenreModel> genres { get; set; }
         public AuthorModel author{ get; set; }
         public UserModel user { get; set; }
+
+        public UserModel GetLoginUser()
+        {
+            return HomeController.UserModel;
+        }
     }
 }

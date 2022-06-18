@@ -1,40 +1,52 @@
-﻿<h2 class="text-center mt-5">Đăng ký</h2>
+﻿@model TruyenChuWebAppMVC.Models.UserModel
 
-<form class="w-50 mx-auto p-5">
+<h2 class="text-center mt-5">Đăng ký</h2>
+
+<form class="w-50 mx-auto p-5" asp-action="SignUp" asp-controller="Home">
+    <div asp-validation-summary="ModelOnly"></div>
     <!-- UserID input -->
     <div class="form-outline mb-4">
         <label class="form-label" for="form2Example1">Tài khoản</label>
-        <input type="text" id="form2Example1" class="form-control" />
+        <input type="text" id="form2Example1" class="form-control" asp-for="id" />
+        <span class="text-danger" asp-validation-for="id"></span>
     </div>
 
     <div class="form-outline mb-4">
         <label class="form-label" for="form2Example1">Tên người dùng</label>
-        <input type="text" id="form2Example1" class="form-control" />
+        <input type="text" id="form2Example1" class="form-control" asp-for="name" />
+        <span class="text-danger" asp-validation-for="name"></span>
     </div>
 
     <div class="form-outline mb-4">
         <label class="form-label" for="form2Example1">Email</label>
-        <input type="email" id="form2Example1" class="form-control" />
+        <input type="email" id="form2Example1" class="form-control" asp-for="email" />
+        <span class="text-danger" asp-validation-for="email"></span>
     </div>
 
     <!-- Password input -->
     <div class="form-outline mb-4">
         <label class="form-label" for="form2Example2">Mật khẩu</label>
-        <input type="password" id="form2Example2" class="form-control" />
+        <input type="password" id="form2Example2" class="form-control" asp-for="pass" />
+        <span class="text-danger" asp-validation-for="pass"></span>
     </div>
 
     <!-- Re-type Password input -->
     <div class="form-outline mb-4">
         <label class="form-label" for="form2Example2">Nhập lại mật khẩu</label>
-        <input type="password" id="form2Example2" class="form-control" />
+        <input type="password" id="form2Example2" class="form-control" asp-for="retypePass"/>
+        <span class="text-danger" asp-validation-for="retypePass"></span>
     </div>
 
 
     <!-- Submit button -->
-    <button type="button" class="btn btn-primary btn-block mb-4">Đăng ký</button>
+    <input type="submit" class="btn btn-primary btn-block mb-4" value="Đăng ký"/>
 
     <!-- Register buttons -->
     <div class="text-center">
         <p>Đã có tài khoản? <a asp-action="SignIn" asp-controller="Home">Đăng nhập</a></p>
+    </div>
+
+    <div class="text-center">
+        <span class="text-danger" asp-validation-for="validation"></span>
     </div>
 </form>
