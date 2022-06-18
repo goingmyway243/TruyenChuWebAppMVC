@@ -22,6 +22,9 @@ namespace TruyenChuWebAppMVC.Controllers
             _chapterModel.novel = novel;
 
             _chapterModel.view_id = viewId;
+
+            var task = CallAPI.IncreaseNovelView(_chapterModel.id_novel);
+            task.Wait();
             
             return View(_chapterModel);
         }

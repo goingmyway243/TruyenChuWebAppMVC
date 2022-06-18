@@ -452,5 +452,31 @@ namespace TruyenChuWebAppMVC.Utils
 
             return true;
         }
+
+        public static async Task<bool> IncreaseNovelView(int novelId)
+        {
+            if (_client == null)
+            {
+                Initialize();
+            }
+
+            var parameter = new Dictionary<string, string>()
+            {
+                {"ID", novelId+""}
+            };
+
+            var postParams = new FormUrlEncodedContent(parameter);
+
+            _response = await _client.PostAsync("increase_novel_view.php", postParams);
+
+            string result = await _response.Content.ReadAsStringAsync();
+
+            if (result.Contains("Error"))
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
